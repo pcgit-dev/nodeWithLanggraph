@@ -1,0 +1,43 @@
+{
+  "name": "nodewithlanggraph",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "dev": "ts-node --transpile-only src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pcgit-dev/nodeWithLanggraph.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pcgit-dev/nodeWithLanggraph/issues"
+  },
+  "homepage": "https://github.com/pcgit-dev/nodeWithLanggraph#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@langchain/anthropic": "^0.3.16",
+    "@langchain/langgraph": "^0.2.63",
+    "@langchain/langgraph-checkpoint-mongodb": "^0.0.6",
+    "@langchain/mongodb": "^0.1.0",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "langchain": "^0.3.20",
+    "mongodb": "^6.15.0",
+    "reflect-metadata": "^0.2.2",
+    "routing-controllers": "^0.11.2",
+    "zod": "^3.24.2"
+  }
+}
