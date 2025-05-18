@@ -1,7 +1,9 @@
 import 'reflect-metadata'; // Required for routing-controllers
 import { createExpressServer } from 'routing-controllers';
 import ConversationalAgentController from './controller/ConversationalAgenTController';
-
+// Removed unused import as 'HumanMessage' is not used in the code
+import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
+import {DemoReactAgent} from './agents/demoReactAgent' ; 
 
 var bodyParser = require('body-parser')
 // create application/json parser
@@ -18,6 +20,7 @@ const app = createExpressServer({
 console.log('Controllers registered:', ConversationalAgentController);
 
 import { Request, Response } from 'express';
+import { llm } from './llm';
 
 // Add a root route
 app.get('/', (_req: Request, res: Response) => {
@@ -25,13 +28,32 @@ app.get('/', (_req: Request, res: Response) => {
 });
 
 app.get('/test', (_req: Request, res: Response) => {
-  res.send('Test route is working!');
+  const agent = new DemoReactAgent();
+
+  // Call the run method with an input string
+  const input = "How is the weather of Dubai today?";
+  const response =  agent.run(input);
+
+  res.send(response);
 });
 
 // POST /api/users gets JSON bodies
 app.post('/api/users', jsonParser, function (req:Request, res:Response) {
   console.log(req.body) // populated with parsed body
-  res.send(req.body);
+  // Wrap the input in a HumanMessage
+  const message = new HumanMessage(req.body.input);
+  llm.invoke([message]).then((response) => {
+    if (response) {
+      console.log('LLM response:'+response);
+      res.send(response);
+    } else {
+      res.status(500).send('Invalid response from LLM');
+    }
+  }
+  ).catch((error) => {
+    console.error('Error invoking LLM:', error);
+    res.status(500).send('Internal Server Error');
+  });
 })
 
 // Start the server
